@@ -32,5 +32,5 @@ class FootTrajectoryRecovery:
         ans[3][2] = -32 * z_max / tf**3
         ans[4][2] = 16 * z_max / tf**4
         ans[5][2] = 0.0
-
+     
         return ans 
