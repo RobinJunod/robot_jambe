@@ -15,7 +15,7 @@ class DCMTrajectoryGenerator:
         self.initialDCM = np.array([0. , 0.])
         self.gravityAcceleration = 9.81
         self.omega = math.sqrt(self.gravityAcceleration/self.CoMHeight ) #Omega is a constant value and is called natural frequency of linear inverted pendulum
-        pass
+        
 
 
     def getDCMTrajectory(self,time): # Here we call planDCMTrajectory and we get DCM
@@ -25,16 +25,19 @@ class DCMTrajectoryGenerator:
 
     def getCoM(self):
         #This function generates the CoM trajectory by integration of CoM velocity(that has been found by the DCM values)
-        self.CoMDot= None #todo: use equation (3) in the project description
-        self.CoM= None #todo: Simple euler numerical integration
+        self.CoMDot= self.omega*(self.DCM-self.CoM) #todo: use equation (3) in the project description (w(xi-x))
+        self.CoM= self.CoM + self.timeStep*self.CoMDotPrev #todo: Simple euler numerical integration
         self.CoMDotPrev=self.CoMDot
         return self.CoM
 
     
     def planDCMTrajectory(self,time): #The output of this function is DCM posiiton
         #todo: use the equation 9 of the project description
-        self.DCM = None
-        pass
+        self.DCM = np.array([(self.initialDCM[0]-self.CoP[0])* math.exp(self.omega*time) + self.CoP[0], 
+                             (self.initialDCM[1]-self.CoP[1])* math.exp(self.omega*time) + self.CoP[1]])
+        
+        
+
 
     
 
